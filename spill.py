@@ -107,7 +107,7 @@ parser.add_option(
    '--tags',
    metavar='TAG,[TAG,...]', 
    type="string",
-   default="r",
+   default="r,",
    help='tags associated to the message'
 )
 parser.add_option(
