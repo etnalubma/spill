@@ -1,0 +1,8 @@
+*.pyc
+*~
+*.db
+*.tar.gz
+etc/*
+spill.egg-info/
+src/*
+
