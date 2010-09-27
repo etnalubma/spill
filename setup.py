@@ -10,5 +10,11 @@ setup(
     author_email='francisco.herrero@gmail.com',
     url='http://github.com/etnalubma/spill',
     description = 'Herramienta de linea de comandos apra publicar en ltmo',
+    entry_points = {
+        'console_scripts': [
+            'spill = spill.scripts:do_spill',
+        ],
+    }
+
 )
 
