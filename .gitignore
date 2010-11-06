@@ -5,4 +5,5 @@
 etc/*
 spill.egg-info/
 src/*
+dist/*
 
