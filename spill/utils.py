@@ -1,5 +1,6 @@
 import os
 import sys
+from subprocess import call
 
 def get_uptime():
    try:
@@ -46,7 +47,7 @@ def get_editor():
 def run_editor(filename):
     """Try to execute an editor to edit the commit message."""
     # kindly taken from bzr
-    for candidate, candidate_source in _get_editor():
+    for candidate, candidate_source in get_editor():
         edargs = candidate.split(' ')
         try:
             ## mutter("trying editor: %r", (edargs +[filename]))

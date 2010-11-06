@@ -12,7 +12,7 @@ setup(
     description = 'Herramienta de linea de comandos apra publicar en ltmo',
     entry_points = {
         'console_scripts': [
-            'spill = spill.scripts:do_spill',
+            'spill = spill.script:do_spill',
         ],
     }
 

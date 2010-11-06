@@ -8,7 +8,7 @@ import os
 import signal
 import tempfile
 import getpass
-from subprocess import call
+
 from spill.formatter import PlainHelpFormatter
 from spill.utils import run_editor, get_uptime
 
@@ -20,7 +20,6 @@ except ImportError:
 
 
 def signal_handler(signal, frame):
-        print '\n Cobarde!'
         sys.exit(0)
 
 signal.signal(signal.SIGINT, signal_handler)
@@ -28,15 +27,6 @@ signal.signal(signal.SIGINT, signal_handler)
 parser = optparse.OptionParser(
     prog='./spill.py',
     formatter=PlainHelpFormatter(),
-    description=u'''
-    /     \
-    vvvvvvv  /|__/|
-       I   /O,O   |
-       I /_____   |      /|/|
-      J|/^ ^ ^ \  |    /00  |    _//|
-       |^ ^ ^ ^ |W|   |/^^\ |   /oo |
-        \m___m__|_|    \m_m_|   \mm_|
-    ''',
     epilog='''
         Las cucarachas lograron con exito su plan, echando a los pestilentes
         sangre caliente de sus cajas de cemento. Ahora el hombre es una especie
@@ -86,7 +76,8 @@ parser.add_option(
 )
 
 
-def do_spill():
+def process_args():
+
     args = parser.parse_args()
 
     remote = args[0].remote_server.split("/")
@@ -100,29 +91,39 @@ def do_spill():
         description = args[0].message
     else:
         tmpfile = tempfile.NamedTemporaryFile()
-        message = run_editor(tempfile.name)
+        message = run_editor(tmpfile.name)
 
         if message == '' or message == '\n':
-            print('Message is blank, so is your mind, Press ^C to exit')
+            print('Message is blank, so is your mind,\nPress ^C to exit')
             description = "".join(sys.stdin.readlines())
         else:
             description = message
 
-    values = dict(
-        author=args[0].author,
-        description=description,
-        tags=args[0].tags,
-        metadata={
-            'uptime': get_uptime(),
-        },
-    )
+    return {
+            'author': args[0].author,
+            'description': description,
+            'tags': args[0].tags,
+            'server': server,
+            'path': path,
+            'metadata':{
+                'uptime': get_uptime(),
+                },
+            }    
 
+def do_spill():
+
+    arguments = process_args()
+    path = arguments['path']
+    server = arguments['server']
+    import ipdb; ipdb.set_trace()    
     print "Connecting to %s/%s ..." % (server, path)
-
     headers = {"Content-Type": "application/json"}
     conn = httplib.HTTPConnection(server)
-    conn.request("POST", "/" + path, json.dumps(values), headers)
+    conn.request("POST", "/" + path, json.dumps(arguments), headers)
     response = conn.getresponse()
     print response.status, response.reason
     print response.read()
     conn.close()
+
+if __name__ == '__main__':
+    do_spill()
