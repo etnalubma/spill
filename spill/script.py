@@ -9,7 +9,7 @@ import signal
 import tempfile
 import getpass
 from subprocess import call
-from spill.formatter import PlanHelpFormatter
+from spill.formatter import PlainHelpFormatter
 from spill.utils import run_editor, get_uptime
 
 
@@ -99,7 +99,7 @@ def do_spill():
     if args[0].message:
         description = args[0].message
     else:
-        tempfile = tempfile.NamedTemporaryFile()
+        tmpfile = tempfile.NamedTemporaryFile()
         message = run_editor(tempfile.name)
 
         if message == '' or message == '\n':

@@ -1,6 +1,5 @@
 import optparse
 
-
 class PlainHelpFormatter(optparse.IndentedHelpFormatter):
 
     def __init__(self,
