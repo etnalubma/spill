@@ -105,17 +105,17 @@ def process_args():
             'tags': args[0].tags,
             'server': server,
             'path': path,
-            'metadata':{
+            'metadata': {
                 'uptime': get_uptime(),
                 },
-            }    
+            }
+
 
 def do_spill():
 
     arguments = process_args()
     path = arguments['path']
     server = arguments['server']
-    import ipdb; ipdb.set_trace()    
     print "Connecting to %s/%s ..." % (server, path)
     headers = {"Content-Type": "application/json"}
     conn = httplib.HTTPConnection(server)

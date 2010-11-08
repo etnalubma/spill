@@ -2,32 +2,33 @@ import os
 import sys
 from subprocess import call
 
+
 def get_uptime():
-   try:
-       f = open( "/proc/uptime" )
-       contents = f.read().split()
-       f.close()
-   except:
-      return None
+    try:
+        f = open("/proc/uptime")
+        contents = f.read().split()
+        f.close()
+    except:
+        return None
 
-   total_seconds = float(contents[0])
-   
-   # Helper vars:
-   MINUTE  = 60
-   HOUR    = MINUTE * 60
-   DAY     = HOUR * 24
+    total_seconds = float(contents[0])
 
-   # Get the days, hours, etc:
-   days    = int( total_seconds / DAY )
-   hours   = int( ( total_seconds % DAY ) / HOUR )
-   minutes = int( ( total_seconds % HOUR ) / MINUTE )
-   seconds = int( total_seconds % MINUTE )
+    # Helper vars:
+    MINUTE = 60
+    HOUR = MINUTE * 60
+    DAY = HOUR * 24
 
-   string = "%d %s, %d:%d:%d" % (days,
-            days > 1 and 'days' or 'day', hours, minutes, seconds)
-   
-   return string
-   
+    # Get the days, hours, etc:
+    days = int(total_seconds / DAY)
+    hours = int((total_seconds % DAY) / HOUR)
+    minutes = int((total_seconds % HOUR) / MINUTE)
+    seconds = int(total_seconds % MINUTE)
+
+    string = "%d %s, %d:%d:%d" % (days,
+                    days > 1 and 'days' or 'day', hours, minutes, seconds)
+
+    return string
+
 
 def get_editor():
     """Return a sequence of possible editor binaries for the current platform"""
@@ -43,7 +44,8 @@ def get_editor():
     else:
         for editor in ['/usr/bin/editor', 'vi', 'pico', 'nano', 'joe']:
             yield editor, None
-            
+
+
 def run_editor(filename):
     """Try to execute an editor to edit the commit message."""
     # kindly taken from bzr
